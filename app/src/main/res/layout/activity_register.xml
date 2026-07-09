@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout android:fitsSystemWindows="true" xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".RegisterActivity">
 
 
     <TextView
-        android:id="@+id/loginAufforderung"
+        android:id="@+id/registerAufforderung"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="30dp"
-        android:text="Bitte Logge dich ein!"
+        android:text="Bitte registriere dich!"
         android:textSize="26sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/emailText"
+        app:layout_constraintBottom_toTopOf="@+id/usernameText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -25,62 +25,79 @@
         app:layout_constraintVertical_chainStyle="packed" />
 
     <EditText
-        android:id="@+id/emailText"
+        android:id="@+id/usernameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:backgroundTint="#8C8585"
         android:ems="10"
+        android:hint="Nutzername"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/emailTextRegister"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registerAufforderung"/>
+
+    <EditText
+        android:id="@+id/emailTextRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#8C8585"
+        android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/passwortText"
+        app:layout_constraintBottom_toTopOf="@+id/passwortTextRegister"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginAufforderung"/>
+        app:layout_constraintTop_toBottomOf="@+id/usernameText"/>
 
     <EditText
-        android:id="@+id/passwortText"
+        android:id="@+id/passwortTextRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Passwort"
         android:inputType="textPassword"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/checkLoginSpeichern"
+        app:layout_constraintBottom_toTopOf="@+id/passwortTextRegisterRepeat"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailText" />
+        app:layout_constraintTop_toBottomOf="@+id/emailTextRegister" />
 
-    <CheckBox
-        android:id="@+id/checkLoginSpeichern"
+    <EditText
+        android:id="@+id/passwortTextRegisterRepeat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Meine Anmeldedaten merken"
-        android:textSize="12sp"
-        android:layout_marginRight="40dp"
+        android:ems="10"
+        android:hint="Passwort wiederholen"
+        android:inputType="textPassword"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/registerButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwortText"
-        app:layout_constraintBottom_toTopOf="@+id/loginButton" />
+        app:layout_constraintTop_toBottomOf="@+id/passwortTextRegister" />
 
     <Button
-        android:id="@+id/loginButton"
+        android:id="@+id/registerButton"
         android:layout_width="200dp"
         android:layout_height="58dp"
         android:layout_marginTop="20dp"
-        android:text="Login"
+        android:text="Registrieren"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkLoginSpeichern" />
+        app:layout_constraintBottom_toTopOf="@+id/loginText"
+        app:layout_constraintTop_toBottomOf="@+id/passwortTextRegisterRepeat" />
 
     <TextView
         android:id="@+id/loginText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Noch kein Account? Hier registrieren!"
-        app:layout_constraintTop_toBottomOf="@+id/loginButton"
+        android:layout_marginTop="20dp"
+        android:text="Du hast bereits einen Account? Hier einloggen!"
+        android:background="?attr/selectableItemBackground"
+        app:layout_constraintTop_toBottomOf="@+id/registerButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
