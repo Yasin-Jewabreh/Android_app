@@ -9,10 +9,17 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         final Button loginButton = findViewById(R.id.loginButton);
+        final EditText emailField = findViewById(R.id.emailText);
+        final EditText passwortField = findViewById(R.id.passwortText);
 
 
 
@@ -28,13 +37,7 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View view) {
-
-                if (checkCredentials()) {
-                    Toast.makeText(view.getContext(), "Login erfolgreich!", Toast.LENGTH_SHORT).show();
-
-                    Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                    startActivity(intent);
-                }
+                checkCredentials(emailField, passwortField);
             }
         });
 
@@ -44,27 +47,39 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
     }
 
-    public boolean checkCredentials() {
-        boolean status = false;
-        EditText emailField = findViewById(R.id.emailText);
-        EditText passwordField = findViewById(R.id.passwortText);
-        String emailText = emailField.getText().toString().trim();
-        String passwordText = passwordField.getText().toString().trim();
+    public void checkCredentials(EditText emailField, EditText passwordField) {
+        String email = emailField.getText().toString().trim();
+        String passwort = passwordField.getText().toString();
 
-        if (emailText.isEmpty()) {
-            emailField.setError("Bitte füllen Sie dieses Feld aus!");
+        mAuth = FirebaseAuth.getInstance();
+        mAuth.signInWithEmailAndPassword(email, passwort)
+                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                    @Override
+                    public void onSuccess(AuthResult authResult) {
+                        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        passwordField.setError("Passwort oder Email ist falsch!");
+                        passwordField.setText("");
+
+                    }
+                });
+
+        if (email.isEmpty()) {
+            emailField.setError("Bitte geben Sie eine gültige Emailadresse!");
         }
-        if (passwordText.isEmpty()) {
+        if (passwort.isEmpty()) {
             passwordField.setError("Bitte füllen Sie dieses Feld aus!");
         }
-        if (!emailText.isEmpty() && !passwordText.isEmpty()) {
-            status = true;
-        }
-        return status;
     }
 }
