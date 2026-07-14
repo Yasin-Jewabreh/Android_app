@@ -9,7 +9,7 @@
 
 
     <TextView
-        android:id="@+id/registerAufforderung"
+        android:id="@+id/addDecisionText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -17,7 +17,7 @@
         android:text="Bitte registriere dich!"
         android:textSize="26sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/usernameText"
+        app:layout_constraintBottom_toTopOf="@+id/decisionTitel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -25,7 +25,7 @@
         app:layout_constraintVertical_chainStyle="packed" />
 
     <EditText
-        android:id="@+id/usernameText"
+        android:id="@+id/decisionTitel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -36,7 +36,7 @@
         app:layout_constraintBottom_toTopOf="@+id/emailTextRegister"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerAufforderung"/>
+        app:layout_constraintTop_toBottomOf="@+id/addDecisionText"/>
 
     <EditText
         android:id="@+id/emailTextRegister"
@@ -50,7 +50,7 @@
         app:layout_constraintBottom_toTopOf="@+id/passwortTextRegister"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/usernameText"/>
+        app:layout_constraintTop_toBottomOf="@+id/decisionTitel"/>
 
     <EditText
         android:id="@+id/passwortTextRegister"

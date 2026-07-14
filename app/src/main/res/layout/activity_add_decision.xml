@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddDecisionActivity">
+
+    <TextView
+        android:id="@+id/addDecisionText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Füg eine neue Entscheidung hinzu!"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/decisionTitel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:hint="Titel der Entscheidung"
+        app:layout_constraintTop_toBottomOf="@+id/addDecisionText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputKategorie"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:hint="Kategorie auswählen"
+        app:layout_constraintTop_toBottomOf="@+id/decisionTitel"
+        app:layout_constraintStart_toStartOf="@+id/decisionTitel"
+        app:layout_constraintEnd_toEndOf="@+id/decisionTitel">
+
+        <AutoCompleteTextView
+            android:id="@+id/categoryDropdown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <EditText
+        android:id="@+id/decisionBeschreibung"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_marginTop="12dp"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        android:hint="Notizen (optional)"
+        app:layout_constraintTop_toBottomOf="@+id/inputKategorie"
+        app:layout_constraintStart_toStartOf="@+id/decisionTitel"
+        app:layout_constraintEnd_toEndOf="@+id/decisionTitel" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputMood"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:hint="Wie fühlst du dich gerade?"
+        app:layout_constraintTop_toBottomOf="@+id/decisionBeschreibung"
+        app:layout_constraintStart_toStartOf="@+id/decisionTitel"
+        app:layout_constraintEnd_toEndOf="@+id/decisionTitel">
+
+        <AutoCompleteTextView
+            android:id="@+id/moodDropdown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <EditText
+        android:id="@+id/decisionDatum"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="date"
+        android:layout_marginTop="12dp"
+        android:hint="Wann möchtest du diese Entscheidung bewerten?"
+        android:textSize="15sp"
+        android:focusable="false"
+        app:layout_constraintTop_toBottomOf="@+id/inputMood"
+        app:layout_constraintStart_toStartOf="@+id/decisionTitel"
+        app:layout_constraintEnd_toEndOf="@+id/decisionTitel" />
+
+    <EditText
+        android:id="@+id/inputOptionName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        android:hint="Neue Option"
+        app:layout_constraintTop_toBottomOf="@+id/decisionDatum"
+        app:layout_constraintStart_toStartOf="@+id/decisionTitel"
+        app:layout_constraintEnd_toStartOf="@+id/addOptionButton" />
+
+    <Button
+        android:id="@+id/addOptionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+"
+        app:layout_constraintTop_toTopOf="@+id/inputOptionName"
+        app:layout_constraintBottom_toBottomOf="@+id/inputOptionName"
+        app:layout_constraintEnd_toEndOf="@+id/decisionTitel" />
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintTop_toBottomOf="@+id/inputOptionName"
+        app:layout_constraintStart_toStartOf="@+id/decisionTitel"
+        app:layout_constraintEnd_toEndOf="@+id/decisionTitel" />
+
+    <TextView
+        android:id="@+id/entscheidungText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text=""
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/listView"
+        app:layout_constraintEnd_toEndOf="@+id/decisionTitel"
+        app:layout_constraintStart_toStartOf="@+id/decisionTitel" />
+
+    <Button
+        android:id="@+id/btnSpeichern"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:text="Speichern"
+        app:layout_constraintTop_toBottomOf="@+id/entscheidungText"
+        app:layout_constraintStart_toStartOf="@+id/decisionTitel"
+        app:layout_constraintEnd_toStartOf="@+id/btnAbbrechen"
+        app:layout_constraintHorizontal_chainStyle="spread" />
+
+    <Button
+        android:id="@+id/btnAbbrechen"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="8dp"
+        android:text="Abbrechen"
+        app:layout_constraintTop_toBottomOf="@+id/entscheidungText"
+        app:layout_constraintStart_toEndOf="@+id/btnSpeichern"
+        app:layout_constraintEnd_toEndOf="@+id/decisionTitel" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

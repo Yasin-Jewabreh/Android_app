@@ -21,8 +21,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.HashMap;
-
 public class RegisterActivity extends AppCompatActivity {
     private DatabaseReference UserRef;
     private FirebaseAuth mAuth;
@@ -38,19 +36,26 @@ public class RegisterActivity extends AppCompatActivity {
 
         final EditText emailText = findViewById(R.id.emailTextRegister);
         final EditText passwortText = findViewById(R.id.passwortTextRegister);
-        final EditText nameText = findViewById(R.id.usernameText);
+        final EditText nameText = findViewById(R.id.decisionTitel);
         final Button registerButton = findViewById(R.id.registerButton);
-
+        final EditText passwortTextWiederholen = findViewById(R.id.passwortTextRegisterRepeat);
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String name = nameText.getText().toString().trim();
                 String email = emailText.getText().toString().trim();
                 String passwort = passwortText.getText().toString();
+                String passwortwiederholen = passwortTextWiederholen.getText().toString();
+
                 if (email.isEmpty() || name.isEmpty() || passwort.isEmpty()) {
                     Toast.makeText(v.getContext(), "Bitte alle Felder ausfüllen!", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
+                if (!passwort.equals(passwortwiederholen)) {
+                    passwortTextWiederholen.setError("Die Passwörter müssen übereinstimmen!");
+                }
+
 
                 mAuth.createUserWithEmailAndPassword(email, passwort)
                         .addOnCompleteListener(task -> {

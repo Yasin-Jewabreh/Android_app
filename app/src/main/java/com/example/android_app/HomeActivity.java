@@ -1,5 +1,6 @@
 package com.example.android_app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +12,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 public class HomeActivity extends AppCompatActivity {
 
     @Override
@@ -19,23 +22,26 @@ public class HomeActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home);
 
-        final Button zaehlerButton = findViewById(R.id.zaehler);
-        final TextView zaehlerText = findViewById(R.id.textView);
-        Globals g = Globals.getInstance();
-        int counter = g.getCounter();
-        String counterText = Integer.toString(counter);
-        zaehlerText.setText(counterText);
+        final FloatingActionButton addDecisionButton = findViewById(R.id.addDecisionButton);
+        final Button btnAllDecisions = findViewById(R.id.btnAllDecisions);
 
-        zaehlerButton.setOnClickListener(new View.OnClickListener() {
+        btnAllDecisions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Globals g = Globals.getInstance();
-                g.increase();
-                int counter = g.getCounter();
-                String counterText = Integer.toString(counter);
-                zaehlerText.setText(counterText);
-
+                Intent intent = new Intent(HomeActivity.this, AllDecisions.class);
+                startActivity(intent);
             }
         });
+
+
+        addDecisionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, AddDecisionActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
 }
