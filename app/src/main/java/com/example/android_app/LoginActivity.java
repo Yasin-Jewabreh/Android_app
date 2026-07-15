@@ -1,12 +1,12 @@
 package com.example.android_app;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.*;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -17,21 +17,38 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-
+    private SharedPreferences loginPreferences;
+    private static final String PREF_NAME = "login_preferences";
+    private static final String KEY_REMEMBER_LOGIN = "remember_login";
+    private CheckBox checkBoxRememberLogin;
+    private boolean rememberLogin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         final Button loginButton = findViewById(R.id.loginButton);
         final EditText emailField = findViewById(R.id.emailText);
         final EditText passwortField = findViewById(R.id.passwortText);
+        checkBoxRememberLogin = findViewById(R.id.checkLoginSpeichern);
 
+        loginPreferences = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
 
+        rememberLogin = loginPreferences.getBoolean(KEY_REMEMBER_LOGIN, false);
+        mAuth = FirebaseAuth.getInstance();
+
+        String currentUser = mAuth.getCurrentUser().getUid();
+        checkBoxRememberLogin.setChecked(rememberLogin);
+
+        if (rememberLogin && currentUser != null) {
+            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
 
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -45,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         registerText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -62,7 +79,9 @@ public class MainActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
-                        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                        rememberLogin = checkBoxRememberLogin.isChecked();
+                        loginPreferences.edit().putBoolean(KEY_REMEMBER_LOGIN, rememberLogin).apply();
+                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                         startActivity(intent);
                         finish();
                     }
