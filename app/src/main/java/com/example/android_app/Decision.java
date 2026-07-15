@@ -12,7 +12,8 @@ public class Decision {
     private String stimmung;
     private long erstellAm;
     private long erinnerungAm;
-
+    private long bewertetAm;
+    private float bewertung;
     private boolean istBewertet;
     private String entscheidung;
     private List<String> optionen;
@@ -21,7 +22,7 @@ public class Decision {
     private Map<String, Integer> kriterienGewichtung;
     private Map<String, Map<String, Integer>> scoreMatrix;
 
-    public Decision(String decisionID, String userID, String titel, String kategorie, String beschreibung, String stimmung, long erstellAm, long erinnerungAm, boolean istBewertet, String entscheidung, List<String> optionen, List<String> kriterien, Map<String, Integer> kriterienGewichtung, Map<String, Map<String, Integer>> scoreMatrix) {
+    public Decision(String decisionID, String userID, String titel, String kategorie, String beschreibung, String stimmung, long erstellAm, long erinnerungAm, long bewertetAm, float bewertung, boolean istBewertet, String entscheidung, List<String> optionen, List<String> kriterien, Map<String, Integer> kriterienGewichtung, Map<String, Map<String, Integer>> scoreMatrix) {
         this.decisionID = decisionID;
         this.userID = userID;
         this.titel = titel;
@@ -30,6 +31,8 @@ public class Decision {
         this.stimmung = stimmung;
         this.erstellAm = erstellAm;
         this.erinnerungAm = erinnerungAm;
+        this.bewertetAm = bewertetAm;
+        this.bewertung = bewertung;
         this.istBewertet = istBewertet;
         this.entscheidung = entscheidung;
         this.optionen = optionen;
@@ -172,5 +175,21 @@ public class Decision {
 
     public void setIstBewertet(boolean istBewertet) {
         this.istBewertet = istBewertet;
+    }
+
+    public long getBewertetAm() {
+        return bewertetAm;
+    }
+
+    public void setBewertetAm(long bewertetAm) {
+        this.bewertetAm = bewertetAm;
+    }
+
+    public float getBewertung() {
+        return bewertung;
+    }
+
+    public void setBewertung(float bewertung) {
+        this.bewertung = bewertung;
     }
 }

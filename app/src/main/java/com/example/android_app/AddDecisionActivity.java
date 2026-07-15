@@ -1,5 +1,7 @@
 package com.example.android_app;
 
+import static java.lang.Long.parseLong;
+
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.View;
@@ -25,17 +27,21 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 public class AddDecisionActivity extends AppCompatActivity {
     private FirebaseRecyclerOptions<Decision> options;
-    private FirebaseRecyclerAdapter<Decision,MyViewHolder> adapter;
+    private FirebaseRecyclerAdapter<Decision, MyViewHolder> adapter;
     private RecyclerView recyclerView;
     private DatabaseReference ref;
     private FirebaseAuth mAuth;
@@ -43,14 +49,18 @@ public class AddDecisionActivity extends AppCompatActivity {
     private List<String> meineOptionen = new ArrayList<>();
     private ArrayAdapter<String> optionenAdapter;
 
-    private String titel, kategorie, entscheidung, beschreibung, stimmung ;
-    private long erinnerungsTimestamp;
+    private String titel, kategorie, entscheidung, notizen, stimmung, request, decisionID, option, key;
+    private long erinnerungsTimestamp, erstelltAm, erinnerungAm;
+    private boolean bearbeiten;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_add_decision);
 
+        key = getIntent().getStringExtra("key");
+        request = getIntent().getStringExtra("request");
+        bearbeiten = ("bearbeiten").equals(request);
         //Datenbanken initialisieren
         mAuth = FirebaseAuth.getInstance();
 
@@ -76,6 +86,7 @@ public class AddDecisionActivity extends AppCompatActivity {
         moodDropdown.setAdapter(adapterMood);
 
         //Button, Text und Listview für die Optionen Initialsieren
+        final TextView addDecisionText = findViewById(R.id.addDecisionText);
         final EditText titelText = findViewById(R.id.decisionTitel);
         final EditText beschreibungText = findViewById(R.id.decisionBeschreibung);
         final Button addOption = findViewById(R.id.addOptionButton);
@@ -84,8 +95,11 @@ public class AddDecisionActivity extends AppCompatActivity {
         final TextView entscheidungText = findViewById(R.id.entscheidungText);
         final Button speichern = findViewById(R.id.btnSpeichern);
         final Button abbrechen = findViewById(R.id.btnAbbrechen);
-        final EditText erinnerungAm = findViewById(R.id.decisionDatum);
+        final EditText etErinnerungAm = findViewById(R.id.decisionDatum);
 
+        if (bearbeiten) {
+            addDecisionText.setText("Bearbeite deine Entscheidung");
+        }
         optionenAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, meineOptionen);
         optionenListview.setAdapter(optionenAdapter);
 
@@ -93,7 +107,7 @@ public class AddDecisionActivity extends AppCompatActivity {
         addOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String option = optionName.getText().toString().trim();
+                option = optionName.getText().toString().trim();
                 if (!option.isEmpty()) {
                     meineOptionen.add(option);
                     optionenAdapter.notifyDataSetChanged();
@@ -101,7 +115,6 @@ public class AddDecisionActivity extends AppCompatActivity {
                 }
             }
         });
-
         optionenListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -123,7 +136,7 @@ public class AddDecisionActivity extends AppCompatActivity {
         });
 
         erinnerungsTimestamp = 0;
-        erinnerungAm.setOnClickListener(new View.OnClickListener() {
+        etErinnerungAm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final Calendar c = Calendar.getInstance();
@@ -133,7 +146,7 @@ public class AddDecisionActivity extends AppCompatActivity {
                         c.set(year, month, dayOfMonth, hourOfDay, minute);
                         erinnerungsTimestamp = c.getTimeInMillis();
 
-                        erinnerungAm.setText(dayOfMonth +"." + (month+1) + "." + year + " " + hourOfDay + ":" + minute);
+                        etErinnerungAm.setText(dayOfMonth +"." + (month+1) + "." + year + " " + hourOfDay + ":" + minute);
                     }, c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), true).show();
                 }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show();
             }
@@ -142,48 +155,79 @@ public class AddDecisionActivity extends AppCompatActivity {
         speichern.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String titel = titelText.getText().toString().trim();
-                String beschreibung = beschreibungText.getText().toString().trim();
-                String kategorie = categoryDropdown.getText().toString().trim();
-                String stimmung = moodDropdown.getText().toString().trim();
-                long erstelltAm = System.currentTimeMillis();
-                long erinnerungAm = erinnerungsTimestamp;
-                String decisionID = ref.push().getKey();
-                String entscheidung = entscheidungText.getText().toString().replace("Entscheidung: ", "").trim();
+                titel = titelText.getText().toString().trim();
+                notizen = beschreibungText.getText().toString().trim();
+                kategorie = categoryDropdown.getText().toString().trim();
+                stimmung = moodDropdown.getText().toString().trim();
+                erstelltAm = System.currentTimeMillis();
+                erinnerungAm = erinnerungsTimestamp;
+
+                entscheidung = entscheidungText.getText().toString().replace("Entscheidung: ", "").trim();
 
                 if (titel.isEmpty() || kategorie.isEmpty() || stimmung.isEmpty() || erinnerungAm == 0 || entscheidung.isEmpty()) {
                     Toast.makeText(v.getContext(), "Bitte alle nötigen Felder ausfüllen!", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                Decision neueEntscheidung = new Decision();
+                if (!bearbeiten) {
+                    decisionID = ref.push().getKey();
 
-                neueEntscheidung.setTitel(titel);
-                neueEntscheidung.setBeschreibung(beschreibung);
-                neueEntscheidung.setKategorie(kategorie);
-                neueEntscheidung.setStimmung(stimmung);
-                neueEntscheidung.setErinnerungAm(erinnerungAm);
-                neueEntscheidung.setErstellAm(erstelltAm);
-                neueEntscheidung.setUserID(currentUserId);
-                neueEntscheidung.setDecisionID(decisionID);
-                neueEntscheidung.setEntscheidung(entscheidung);
-                neueEntscheidung.setIstBewertet(false);
+                    Decision neueEntscheidung = new Decision();
 
-                ref.child(decisionID).setValue(neueEntscheidung).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Toast.makeText(v.getContext(), "Entscheidung erfolgreich eingefügt!", Toast.LENGTH_SHORT).show();
-                        finish();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(v.getContext(), "Speichern der Entscheidung fehlgeschlagen!", Toast.LENGTH_SHORT).show();
+                    neueEntscheidung.setTitel(titel);
+                    neueEntscheidung.setBeschreibung(notizen);
+                    neueEntscheidung.setKategorie(kategorie);
+                    neueEntscheidung.setStimmung(stimmung);
+                    neueEntscheidung.setErinnerungAm(erinnerungAm);
+                    neueEntscheidung.setErstellAm(erstelltAm);
+                    neueEntscheidung.setUserID(currentUserId);
+                    neueEntscheidung.setDecisionID(decisionID);
+                    neueEntscheidung.setEntscheidung(entscheidung);
+                    neueEntscheidung.setIstBewertet(false);
+                    neueEntscheidung.setBewertetAm(0);
+                    neueEntscheidung.setBewertung(0);
+                    neueEntscheidung.setOptionen(meineOptionen);
 
-                    }
-                });
+                    ref.child(decisionID).setValue(neueEntscheidung).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(v.getContext(), "Entscheidung erfolgreich eingefügt!", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(v.getContext(), "Speichern der Entscheidung fehlgeschlagen!", Toast.LENGTH_SHORT).show();
 
+                        }
+                    });
 
+                } else {
+                    decisionID = key;
+                    HashMap hashMap = new HashMap();
+
+                    hashMap.put("titel", titel);
+                    hashMap.put("beschreibung", notizen);
+                    hashMap.put("kategorie", kategorie);
+                    hashMap.put("stimmung", stimmung);
+                    hashMap.put("erinnerungAm", erinnerungAm);
+                    hashMap.put("entscheidung", entscheidung);
+                    hashMap.put("optionen", meineOptionen);
+
+                    ref.child(key).updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener() {
+                        @Override
+                        public void onSuccess(Object o) {
+                            Toast.makeText(v.getContext(), "Änderungen erfolgreich gespeichert!", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(v.getContext(), "Änderungen konnten leider nicht gespeichert werden!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                }
             }
         });
         abbrechen.setOnClickListener(new View.OnClickListener() {
@@ -193,6 +237,44 @@ public class AddDecisionActivity extends AppCompatActivity {
             }
         });
 
+
+
+        if (bearbeiten) {
+            ref.child(key).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    titel = snapshot.child("titel").getValue().toString();
+                    kategorie = snapshot.child("kategorie").getValue().toString();
+                    stimmung = snapshot.child("stimmung").getValue().toString();
+                    notizen = snapshot.child("beschreibung").getValue().toString();
+                    entscheidung = snapshot.child("entscheidung").getValue().toString();
+                    erinnerungAm = parseLong(snapshot.child("erinnerungAm").getValue().toString());
+                    erinnerungsTimestamp = erinnerungAm;
+                    meineOptionen.clear();
+                    DataSnapshot dataSnapshot = snapshot.child("optionen");
+                    for (DataSnapshot child : dataSnapshot.getChildren()) {
+                        option = child.getValue().toString();
+                        meineOptionen.add(option);
+                    }
+                    optionenAdapter.notifyDataSetChanged();
+                    titelText.setText(titel);
+                    categoryDropdown.setText(kategorie);
+                    moodDropdown.setText(stimmung);
+                    entscheidungText.setText("Entscheidung: "+entscheidung);
+                    if (!notizen.isEmpty()) { beschreibungText.setText(notizen);} else {beschreibungText.setText("Notizen: /");}
+
+                    java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd.MM.yyyy 'um' HH:mm", java.util.Locale.getDefault());
+                    String formatiertesDatum = sdf.format(new java.util.Date(erinnerungAm));
+                    etErinnerungAm.setText("Am " + formatiertesDatum + " bewerten");
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
 
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {

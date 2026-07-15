@@ -1,5 +1,6 @@
 package com.example.android_app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,12 +18,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
-public class AllDecisions extends AppCompatActivity {
+public class AllDecisionsActivity extends AppCompatActivity {
 
     private FirebaseRecyclerAdapter<Decision, MyViewHolder> adapterOffen;
     private FirebaseRecyclerAdapter<Decision, MyViewHolder> adapterBewertet;
@@ -55,14 +57,12 @@ public class AllDecisions extends AppCompatActivity {
         }
 
         rvOffen = findViewById(R.id.rvOffeneDecisions);
-        rvOffen.setHasFixedSize(true);
         rvOffen.setLayoutManager(new LinearLayoutManager(this));
 
         rvBewertet = findViewById(R.id.rvBewerteteDecisions);
-        rvBewertet.setHasFixedSize(true);
         rvBewertet.setLayoutManager(new LinearLayoutManager(this));
 
-        Query queryOffen = ref.orderByChild("bewertet").equalTo(false);
+        Query queryOffen = ref.orderByChild("istBewertet").equalTo(false);
         FirebaseRecyclerOptions<Decision> optionsOffen = new FirebaseRecyclerOptions.Builder<Decision>()
                 .setQuery(queryOffen, Decision.class)
                 .build();
@@ -70,30 +70,34 @@ public class AllDecisions extends AppCompatActivity {
         adapterOffen = new FirebaseRecyclerAdapter<Decision, MyViewHolder>(optionsOffen) {
             @Override
             protected void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull Decision model) {
+                String key = getRef(position).getKey();
+                holder.view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getApplicationContext(), DetailsDecisionActivity.class);
+                        intent.putExtra("key", key);
+                        startActivity(intent);
+                    }
+                });
+
                 holder.titel.setText(model.getTitel());
                 holder.kategorie.setText("Kategorie: " + model.getKategorie());
-
-                if (model.getEntscheidung() != null && !model.getEntscheidung().isEmpty()) {
-                    holder.entscheidung.setText("Entscheidung: " + model.getEntscheidung());
-                } else {
-                    holder.entscheidung.setText("Entscheidung: Noch offen");
-                }
-
-                holder.bewerten.setEnabled(true);
-                holder.bewerten.setText("Bewerten");
-                holder.bewerten.setOnClickListener(v -> Toast.makeText(AllDecisions.this, "Bewerten für: " + model.getTitel(), Toast.LENGTH_SHORT).show());
-                holder.bearbeiten.setOnClickListener(v -> Toast.makeText(AllDecisions.this, "Bearbeiten für: " + model.getTitel(), Toast.LENGTH_SHORT).show());
+                holder.entscheidung.setText("Entscheidung: " + model.getEntscheidung());
+                long erinnerungZeit = model.getErinnerungAm();
+                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd.MM.yyyy 'um' HH:mm", java.util.Locale.getDefault());
+                String formatiertesDatum = sdf.format(new java.util.Date(erinnerungZeit));
+                holder.erinnerungAm.setText("Am " + formatiertesDatum + " bewerten");
             }
 
             @NonNull
             @Override
             public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_view_layout, parent, false);
+                View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.all_decision_list_layout, parent, false);
                 return new MyViewHolder(v);
             }
         };
 
-        Query queryBewertet = ref.orderByChild("bewertet").equalTo(true);
+        Query queryBewertet = ref.orderByChild("istBewertet").equalTo(true);
         FirebaseRecyclerOptions<Decision> optionsBewertet = new FirebaseRecyclerOptions.Builder<Decision>()
                 .setQuery(queryBewertet, Decision.class)
                 .build();
@@ -104,17 +108,20 @@ public class AllDecisions extends AppCompatActivity {
                 holder.titel.setText(model.getTitel());
                 holder.kategorie.setText("Kategorie: " + model.getKategorie());
                 holder.entscheidung.setText("Entscheidung: " + model.getEntscheidung());
+                long bewertetZeit = model.getBewertetAm();
+                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd.MM.yyyy 'um' HH:mm", java.util.Locale.getDefault());
+                String formatiertesDatum = sdf.format(new java.util.Date(bewertetZeit));
+                holder.erinnerungAm.setText("Am " + formatiertesDatum + " bewertet");
 
-                holder.bewerten.setText("Bewertet ✓");
-                holder.bewerten.setEnabled(false);
 
-                holder.bearbeiten.setOnClickListener(v -> Toast.makeText(AllDecisions.this, "Bearbeiten für: " + model.getTitel(), Toast.LENGTH_SHORT).show());
+
+
             }
 
             @NonNull
             @Override
             public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_view_layout, parent, false);
+                View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.all_decision_list_layout, parent, false);
                 return new MyViewHolder(v);
             }
         };
@@ -129,6 +136,44 @@ public class AllDecisions extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+
+        final FloatingActionButton addDecisionButton = findViewById(R.id.addDecisionButton);
+
+        addDecisionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AllDecisionsActivity.this, AddDecisionActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        com.google.android.material.bottomnavigation.BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+
+        bottomNav.setSelectedItemId(R.id.nav_list);
+
+        bottomNav.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+
+            if (id == R.id.nav_dashboard) {
+                startActivity(new Intent(AllDecisionsActivity.this, HomeActivity.class));
+                overridePendingTransition(0, 0);
+                finish();
+                return true;
+            } else if (id == R.id.nav_list) {
+                return true;
+            } else if (id == R.id.nav_statistics) {
+                startActivity(new Intent(AllDecisionsActivity.this, StatisticsActivity.class));
+                overridePendingTransition(0, 0);
+                finish();
+                return true;
+            } else if (id == R.id.nav_profile) {
+                startActivity(new Intent(AllDecisionsActivity.this, ProfileActivity.class));
+                overridePendingTransition(0, 0);
+                finish();
+                return true;
+            }
+            return false;
         });
     }
 
