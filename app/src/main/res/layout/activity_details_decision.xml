@@ -16,12 +16,12 @@
         android:layout_height="wrap_content"
         android:background="@android:color/white"
         android:elevation="4dp"
-        app:navigationIcon="@drawable/baseline_arrow_back_ios_new_24"
-        app:title="Entscheidungsdetails"
-        app:titleTextColor="#212121"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/baseline_arrow_back_ios_new_24"
+        app:title="Entscheidungsdetails"
+        app:titleTextColor="#212121" />
 
     <ScrollView
         android:id="@+id/detailsScrollView"
@@ -34,7 +34,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/topAppBar">
+        app:layout_constraintTop_toBottomOf="@id/topAppBar">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -130,6 +130,35 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvCardNotizen" />
 
+                <TextView
+                    android:id="@+id/tvOptionenTitel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="28dp"
+                    android:text="Optionen"
+                    android:textColor="#212121"
+                    android:textSize="19sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvCardStimmung" />
+
+                <TextView
+                    android:id="@+id/tvCardOptionen"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="#F3EDF7"
+                    android:lineSpacingExtra="7dp"
+                    android:padding="16dp"
+                    android:text="Optionen werden geladen ..."
+                    android:textColor="#49454F"
+                    android:textSize="17sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvOptionenTitel"
+                    tools:text="• Option 1&#10;• Option 2&#10;• Option 3" />
+
                 <View
                     android:id="@+id/dividerTwo"
                     android:layout_width="0dp"
@@ -138,7 +167,7 @@
                     android:background="#DDDDDD"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvCardStimmung" />
+                    app:layout_constraintTop_toBottomOf="@id/tvCardOptionen" />
 
                 <TextView
                     android:id="@+id/tvCardEntscheidung"
@@ -147,18 +176,31 @@
                     android:layout_marginTop="28dp"
                     android:lineSpacingExtra="5dp"
                     android:text="Entscheidung:"
-                    android:textColor="#3F51B5"
+                    android:textColor="#6750A4"
                     android:textSize="22sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerTwo" />
 
+                <TextView
+                    android:id="@+id/tvCardBewertung"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="28dp"
+                    android:lineSpacingExtra="5dp"
+                    android:text=""
+                    android:textColor="#6750A4"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvCardEntscheidung" />
                 <Button
                     android:id="@+id/btnBewerten"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="8dp"
                     android:minHeight="58dp"
                     android:paddingStart="12dp"
@@ -169,7 +211,7 @@
                     android:textStyle="bold"
                     app:layout_constraintEnd_toStartOf="@id/btnBearbeiten"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvCardEntscheidung" />
+                    app:layout_constraintTop_toBottomOf="@id/tvCardBewertung" />
 
                 <Button
                     android:id="@+id/btnBearbeiten"
@@ -177,7 +219,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="20dp"
                     android:minHeight="58dp"
                     android:paddingStart="12dp"
                     android:paddingEnd="12dp"
@@ -187,7 +229,7 @@
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/btnBewerten"
-                    app:layout_constraintTop_toBottomOf="@id/tvCardEntscheidung" />
+                    app:layout_constraintTop_toBottomOf="@id/tvCardBewertung" />
 
                 <Space
                     android:layout_width="0dp"
