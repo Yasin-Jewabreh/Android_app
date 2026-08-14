@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -25,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final String KEY_REMEMBER_LOGIN = "remember_login";
     private CheckBox checkBoxRememberLogin;
     private boolean rememberLogin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +43,10 @@ public class LoginActivity extends AppCompatActivity {
         rememberLogin = loginPreferences.getBoolean(KEY_REMEMBER_LOGIN, false);
         mAuth = FirebaseAuth.getInstance();
 
-        String currentUser = mAuth.getCurrentUser().getUid();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            String currentUserId = mAuth.getCurrentUser().getUid();
+        }
         checkBoxRememberLogin.setChecked(rememberLogin);
 
         if (rememberLogin && currentUser != null) {
