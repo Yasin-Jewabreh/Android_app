@@ -37,11 +37,11 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         // Views initialisieren
-        final Button loginButton = findViewById(R.id.loginButton);
-        final EditText emailField = findViewById(R.id.emailText);
-        final EditText passwortField = findViewById(R.id.passwortText);
-        final TextView registerText = findViewById(R.id.loginText);
-        checkBoxRememberLogin = findViewById(R.id.checkLoginSpeichern);
+        final Button loginButton = findViewById(R.id.btnAnmelden);
+        final EditText emailField = findViewById(R.id.etAnmeldungEmail);
+        final EditText passwortField = findViewById(R.id.etAnmeldungPasswort);
+        final TextView registerText = findViewById(R.id.tvZurRegistrierung);
+        checkBoxRememberLogin = findViewById(R.id.cbAnmeldungMerken);
 
         // SharedPreferences und Firebase initialisieren
         loginPreferences = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
