@@ -4,24 +4,33 @@ import java.util.List;
 import java.util.Map;
 
 public class Decision {
+
+    // Grunddaten der Entscheidung
     private String decisionID;
     private String userID;
     private String titel;
     private String kategorie;
     private String beschreibung;
     private String stimmung;
+
+    // Zeitangaben und Bewertung
     private long erstellAm;
     private long erinnerungAm;
     private long bewertetAm;
     private float bewertung;
     private boolean istBewertet;
+
+    // Ergebnis und mögliche Optionen
     private String entscheidung;
     private List<String> optionen;
 
+    // Vorbereitung für spätere Entscheidungslogik
     private List<String> kriterien;
     private Map<String, Integer> kriterienGewichtung;
     private Map<String, Map<String, Integer>> scoreMatrix;
 
+
+    // Konstruktor mit allen Eigenschaften
     public Decision(String decisionID, String userID, String titel, String kategorie, String beschreibung, String stimmung, long erstellAm, long erinnerungAm, long bewertetAm, float bewertung, boolean istBewertet, String entscheidung, List<String> optionen, List<String> kriterien, Map<String, Integer> kriterienGewichtung, Map<String, Map<String, Integer>> scoreMatrix) {
         this.decisionID = decisionID;
         this.userID = userID;
@@ -41,8 +50,12 @@ public class Decision {
         this.scoreMatrix = scoreMatrix;
     }
 
+
+    // Leerer Konstruktor für Firebase
     public Decision() {}
 
+
+    // Berechnung der besten Option anhand von Kriterien und Gewichtungen
     public String berechneGewinner(){
         String besteOption ="";
         int maxScore = -1;
@@ -66,6 +79,8 @@ public class Decision {
         return besteOption;
     }
 
+
+    // Getter und Setter für die Entscheidungsdaten
     public String getDecisionID() {
         return decisionID;
     }
@@ -138,6 +153,8 @@ public class Decision {
         this.optionen = optionen;
     }
 
+
+    // Getter und Setter für die spätere Kriterienlogik
     public List<String> getKriterien() {
         return kriterien;
     }
@@ -161,6 +178,9 @@ public class Decision {
     public void setScoreMatrix(Map<String, Map<String, Integer>> scoreMatrix) {
         this.scoreMatrix = scoreMatrix;
     }
+
+
+    // Getter und Setter für Entscheidung und Bewertung
     public String getEntscheidung() {
         return entscheidung;
     }
