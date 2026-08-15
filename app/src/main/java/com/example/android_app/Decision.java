@@ -24,16 +24,9 @@ public class Decision {
     private String entscheidung;
     private List<String> optionen;
 
-    // Vorbereitung für spätere Entscheidungslogik
-    private List<String> kriterien;
-    private Map<String, Integer> kriterienGewichtung;
-    private Map<String, Map<String, Integer>> scoreMatrix;
-
-
-    // Konstruktor mit allen Eigenschaften
-    public Decision(String decisionID, String userID, String titel, String kategorie, String beschreibung, String stimmung, long erstellAm, long erinnerungAm, long bewertetAm, float bewertung, boolean istBewertet, String entscheidung, List<String> optionen, List<String> kriterien, Map<String, Integer> kriterienGewichtung, Map<String, Map<String, Integer>> scoreMatrix) {
-        this.decisionID = decisionID;
+    public Decision(String userID, String decisionID, String titel, String kategorie, String beschreibung, String stimmung, long erstellAm, long erinnerungAm, long bewertetAm, float bewertung, boolean istBewertet, String entscheidung, List<String> optionen) {
         this.userID = userID;
+        this.decisionID = decisionID;
         this.titel = titel;
         this.kategorie = kategorie;
         this.beschreibung = beschreibung;
@@ -45,39 +38,10 @@ public class Decision {
         this.istBewertet = istBewertet;
         this.entscheidung = entscheidung;
         this.optionen = optionen;
-        this.kriterien = kriterien;
-        this.kriterienGewichtung = kriterienGewichtung;
-        this.scoreMatrix = scoreMatrix;
     }
-
 
     // Leerer Konstruktor für Firebase
     public Decision() {}
-
-
-    // Berechnung der besten Option anhand von Kriterien und Gewichtungen
-    public String berechneGewinner(){
-        String besteOption ="";
-        int maxScore = -1;
-
-        for (String option : scoreMatrix.keySet()) {
-            int currentTotal = 0;
-
-            Map<String, Integer> scoresForOption = scoreMatrix.get(option);
-
-            for (String kriterium : kriterienGewichtung.keySet()) {
-                int gewicht = kriterienGewichtung.get(kriterium);
-                int score = scoresForOption.getOrDefault(kriterium, 0);
-                currentTotal += (score*gewicht);
-            }
-
-            if (currentTotal > maxScore) {
-                maxScore = currentTotal;
-                besteOption = option;
-            }
-        }
-        return besteOption;
-    }
 
 
     // Getter und Setter für die Entscheidungsdaten
@@ -152,33 +116,6 @@ public class Decision {
     public void setOptionen(List<String> optionen) {
         this.optionen = optionen;
     }
-
-
-    // Getter und Setter für die spätere Kriterienlogik
-    public List<String> getKriterien() {
-        return kriterien;
-    }
-
-    public void setKriterien(List<String> kriterien) {
-        this.kriterien = kriterien;
-    }
-
-    public Map<String, Integer> getKriterienGewichtung() {
-        return kriterienGewichtung;
-    }
-
-    public void setKriterienGewichtung(Map<String, Integer> kriterienGewichtung) {
-        this.kriterienGewichtung = kriterienGewichtung;
-    }
-
-    public Map<String, Map<String, Integer>> getScoreMatrix() {
-        return scoreMatrix;
-    }
-
-    public void setScoreMatrix(Map<String, Map<String, Integer>> scoreMatrix) {
-        this.scoreMatrix = scoreMatrix;
-    }
-
 
     // Getter und Setter für Entscheidung und Bewertung
     public String getEntscheidung() {
