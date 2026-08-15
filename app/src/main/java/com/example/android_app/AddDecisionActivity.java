@@ -321,8 +321,8 @@ public class AddDecisionActivity extends AppCompatActivity {
 
                     // Geladene Daten in den Eingabefeldern anzeigen
                     titelText.setText(titel);
-                    categoryDropdown.setText(kategorie);
-                    moodDropdown.setText(stimmung);
+                    categoryDropdown.setText(kategorie, false);
+                    moodDropdown.setText(stimmung, false);
                     entscheidungText.setText("Entscheidung: " + entscheidung);
                     beschreibungText.setText(notizen);
 
