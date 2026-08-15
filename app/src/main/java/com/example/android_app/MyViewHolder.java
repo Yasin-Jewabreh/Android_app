@@ -8,16 +8,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class MyViewHolder extends RecyclerView.ViewHolder {
 
-    TextView titel, kategorie, entscheidung, erinnerungAm;
-    View view;
+    // Views eines einzelnen Entscheidungseintrags
+    final TextView titel, kategorie, entscheidung, erinnerungAm;
+    final View view;
+
     public MyViewHolder(@NonNull View itemView) {
         super(itemView);
 
+        // Views aus dem Layout des Listeneintrags initialisieren
         titel = itemView.findViewById(R.id.tvCardTitel);
         kategorie = itemView.findViewById(R.id.tvCardKategorie);
         entscheidung = itemView.findViewById(R.id.tvCardEntscheidung);
         erinnerungAm = itemView.findViewById(R.id.tvCardErinnerungAm);
         view = itemView;
-
     }
 }
