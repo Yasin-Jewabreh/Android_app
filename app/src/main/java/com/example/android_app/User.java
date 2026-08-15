@@ -1,17 +1,17 @@
 package com.example.android_app;
 
 public class User {
+
     private String id;
     private String name;
     private String email;
-    private String passwort;
 
-    public User(String id, String name, String email, String passwort) {
+    public User(String id, String name, String email) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.passwort = passwort;
     }
+
     public User() {
     }
 
@@ -25,9 +25,5 @@ public class User {
 
     public String getEmail() {
         return email;
-    }
-
-    public String getPasswort() {
-        return passwort;
     }
 }
