@@ -11,6 +11,7 @@
     android:fitsSystemWindows="true"
     tools:context=".LoginActivity">
 
+    <!-- Überschrift -->
     <TextView
         android:id="@+id/loginAufforderung"
         android:layout_width="0dp"
@@ -27,6 +28,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Untertitel -->
     <TextView
         android:id="@+id/loginUntertitel"
         android:layout_width="0dp"
@@ -42,6 +44,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/loginAufforderung" />
 
+    <!-- E-Mail-Adresse -->
     <EditText
         android:id="@+id/emailText"
         android:layout_width="0dp"
@@ -49,6 +52,7 @@
         android:layout_marginStart="40dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="40dp"
+        android:autofillHints="emailAddress"
         android:backgroundTint="#6750A4"
         android:hint="E-Mail-Adresse"
         android:inputType="textEmailAddress"
@@ -62,6 +66,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/loginUntertitel" />
 
+    <!-- Passwort -->
     <EditText
         android:id="@+id/passwortText"
         android:layout_width="0dp"
@@ -69,6 +74,7 @@
         android:layout_marginStart="40dp"
         android:layout_marginTop="18dp"
         android:layout_marginEnd="40dp"
+        android:autofillHints="password"
         android:backgroundTint="#6750A4"
         android:hint="Passwort"
         android:inputType="textPassword"
@@ -82,13 +88,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/emailText" />
 
+    <!-- Automatischen Login speichern -->
     <CheckBox
         android:id="@+id/checkLoginSpeichern"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
         android:layout_marginTop="18dp"
-        android:layout_marginEnd="32dp"
         android:buttonTint="#6750A4"
         android:text="Meine Anmeldedaten merken"
         android:textColor="#49454F"
@@ -97,6 +102,7 @@
         app:layout_constraintStart_toStartOf="@id/passwortText"
         app:layout_constraintTop_toBottomOf="@id/passwortText" />
 
+    <!-- Anmelden -->
     <Button
         android:id="@+id/loginButton"
         android:layout_width="0dp"
@@ -114,6 +120,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/checkLoginSpeichern" />
 
+    <!-- Zur Registrierung wechseln -->
     <TextView
         android:id="@+id/loginText"
         android:layout_width="wrap_content"

@@ -7,22 +7,24 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F0F0F0"
+    android:background="#FEF7FF"
     tools:context=".DetailsDecisionActivity">
 
+    <!-- Kopfzeile mit Zurückbutton -->
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/topAppBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@android:color/white"
+        android:background="#F3EDF7"
         android:elevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/baseline_arrow_back_ios_new_24"
         app:title="Entscheidungsdetails"
-        app:titleTextColor="#212121" />
+        app:titleTextColor="#1D1B20" />
 
+    <!-- Scrollbarer Bereich der Entscheidungsdetails -->
     <ScrollView
         android:id="@+id/detailsScrollView"
         android:layout_width="0dp"
@@ -36,6 +38,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/topAppBar">
 
+        <!-- Karte mit allen Informationen der Entscheidung -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -43,43 +46,45 @@
             android:layout_marginEnd="12dp"
             android:layout_marginBottom="16dp"
             app:cardCornerRadius="20dp"
-            app:cardElevation="10dp"
+            app:cardElevation="4dp"
             app:cardUseCompatPadding="true">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="600dp"
                 android:paddingStart="28dp"
                 android:paddingTop="32dp"
                 android:paddingEnd="28dp"
                 android:paddingBottom="32dp">
 
+                <!-- Titel -->
                 <TextView
                     android:id="@+id/tvCardTitel"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:lineSpacingExtra="4dp"
                     android:text="Titel der Entscheidung"
-                    android:textColor="#212121"
+                    android:textColor="#1D1B20"
                     android:textSize="30sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <!-- Kategorie -->
                 <TextView
                     android:id="@+id/tvCardKategorie"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
                     android:text="Kategorie"
-                    android:textColor="#757575"
+                    android:textColor="#79747E"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvCardTitel" />
 
+                <!-- Erinnerungsdatum -->
                 <TextView
                     android:id="@+id/tvCardErinnerungAm"
                     android:layout_width="0dp"
@@ -87,36 +92,39 @@
                     android:layout_marginTop="10dp"
                     android:lineSpacingExtra="3dp"
                     android:text="Am ... um ... Uhr bewerten"
-                    android:textColor="#E64A19"
+                    android:textColor="#6750A4"
                     android:textSize="17sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvCardKategorie" />
 
+                <!-- Trennlinie -->
                 <View
                     android:id="@+id/dividerOne"
                     android:layout_width="0dp"
                     android:layout_height="1dp"
                     android:layout_marginTop="28dp"
-                    android:background="#DDDDDD"
+                    android:background="#E7E0EC"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvCardErinnerungAm" />
 
+                <!-- Notizen -->
                 <TextView
                     android:id="@+id/tvCardNotizen"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="28dp"
                     android:lineSpacingExtra="5dp"
-                    android:text="Beschreibung:"
-                    android:textColor="#333333"
+                    android:text="Notizen:"
+                    android:textColor="#49454F"
                     android:textSize="19sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerOne" />
 
+                <!-- Stimmung -->
                 <TextView
                     android:id="@+id/tvCardStimmung"
                     android:layout_width="0dp"
@@ -124,25 +132,27 @@
                     android:layout_marginTop="24dp"
                     android:lineSpacingExtra="4dp"
                     android:text="Stimmung:"
-                    android:textColor="#555555"
+                    android:textColor="#49454F"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvCardNotizen" />
 
+                <!-- Überschrift der Optionen -->
                 <TextView
                     android:id="@+id/tvOptionenTitel"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="28dp"
                     android:text="Optionen"
-                    android:textColor="#212121"
+                    android:textColor="#1D1B20"
                     android:textSize="19sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvCardStimmung" />
 
+                <!-- Alle Entscheidungsoptionen -->
                 <TextView
                     android:id="@+id/tvCardOptionen"
                     android:layout_width="0dp"
@@ -159,16 +169,18 @@
                     app:layout_constraintTop_toBottomOf="@id/tvOptionenTitel"
                     tools:text="• Option 1&#10;• Option 2&#10;• Option 3" />
 
+                <!-- Trennlinie -->
                 <View
                     android:id="@+id/dividerTwo"
                     android:layout_width="0dp"
                     android:layout_height="1dp"
                     android:layout_marginTop="28dp"
-                    android:background="#DDDDDD"
+                    android:background="#E7E0EC"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvCardOptionen" />
 
+                <!-- Getroffene Entscheidung -->
                 <TextView
                     android:id="@+id/tvCardEntscheidung"
                     android:layout_width="0dp"
@@ -183,19 +195,21 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dividerTwo" />
 
+                <!-- Bewertung der Entscheidung -->
                 <TextView
                     android:id="@+id/tvCardBewertung"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="28dp"
                     android:lineSpacingExtra="5dp"
-                    android:text=""
                     android:textColor="#6750A4"
                     android:textSize="15sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvCardEntscheidung" />
+
+                <!-- Entscheidung bewerten -->
                 <Button
                     android:id="@+id/btnBewerten"
                     android:layout_width="0dp"
@@ -213,6 +227,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvCardBewertung" />
 
+                <!-- Entscheidung bearbeiten -->
                 <Button
                     android:id="@+id/btnBearbeiten"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
@@ -231,6 +246,7 @@
                     app:layout_constraintStart_toEndOf="@id/btnBewerten"
                     app:layout_constraintTop_toBottomOf="@id/tvCardBewertung" />
 
+                <!-- Abstand unter den Buttons -->
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="24dp"

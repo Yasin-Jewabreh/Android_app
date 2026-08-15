@@ -10,6 +10,7 @@
     android:background="#FEF7FF"
     tools:context=".StatisticsActivity">
 
+    <!-- Scrollbarer Bereich für die Statistiken -->
     <androidx.core.widget.NestedScrollView
         android:id="@+id/statisticsScrollView"
         android:layout_width="0dp"
@@ -30,6 +31,7 @@
             android:paddingEnd="16dp"
             android:paddingBottom="32dp">
 
+            <!-- Überschrift -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -38,6 +40,7 @@
                 android:textSize="28sp"
                 android:textStyle="bold" />
 
+            <!-- Untertitel -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -47,7 +50,7 @@
                 android:textColor="#79747E"
                 android:textSize="15sp" />
 
-
+            <!-- Anzahl aller Entscheidungen -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -85,13 +88,13 @@
                         android:layout_marginBottom="20dp"
                         android:background="#CAC4D0" />
 
+                    <!-- Gesamt, offen und bewertet -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:orientation="horizontal"
                         android:weightSum="3">
-
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -126,7 +129,6 @@
                             android:layout_height="58dp"
                             android:background="#CAC4D0" />
 
-
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -159,7 +161,6 @@
                             android:layout_width="1dp"
                             android:layout_height="58dp"
                             android:background="#CAC4D0" />
-
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -195,6 +196,7 @@
 
             </androidx.cardview.widget.CardView>
 
+            <!-- Durchschnittliche Gesamtbewertung -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -241,6 +243,7 @@
 
             </androidx.cardview.widget.CardView>
 
+            <!-- Durchschnittliche Bewertung nach Stimmung -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -286,12 +289,13 @@
                         android:text="Noch keine Daten vorhanden."
                         android:textColor="#49454F"
                         android:textSize="17sp"
-                        tools:text="Gelassen: 8,2 von 10\nGestresst: 5,5 von 10\nMotiviert: 9,0 von 10" />
+                        tools:text="Gelassen: 8,2 von 10&#10;Gestresst: 5,5 von 10&#10;Motiviert: 9,0 von 10" />
 
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
 
+            <!-- Durchschnittliche Bewertung nach Kategorie -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -337,12 +341,13 @@
                         android:text="Noch keine Daten vorhanden."
                         android:textColor="#49454F"
                         android:textSize="17sp"
-                        tools:text="Arbeit: 6,8 von 10\nFinanzen: 7,5 von 10\nPrivat: 8,6 von 10" />
+                        tools:text="Arbeit: 6,8 von 10&#10;Finanzen: 7,5 von 10&#10;Privat: 8,6 von 10" />
 
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
 
+            <!-- Die drei besten Entscheidungen -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -388,12 +393,13 @@
                         android:text="Noch keine bewerteten Entscheidungen vorhanden."
                         android:textColor="#49454F"
                         android:textSize="17sp"
-                        tools:text="1. Weiterbildung beginnen – 9,5 von 10\n2. Urlaub buchen – 9,0 von 10\n3. Neue Wohnung nehmen – 8,5 von 10" />
+                        tools:text="1. Weiterbildung beginnen – 9,5 von 10&#10;2. Urlaub buchen – 9,0 von 10&#10;3. Neue Wohnung nehmen – 8,5 von 10" />
 
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
 
+            <!-- Die drei schlechtesten Entscheidungen -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -439,7 +445,7 @@
                         android:text="Noch keine bewerteten Entscheidungen vorhanden."
                         android:textColor="#49454F"
                         android:textSize="17sp"
-                        tools:text="1. Vertrag verlängern – 2,5 von 10\n2. Gebrauchtwagen kaufen – 4,0 von 10\n3. Projekt übernehmen – 5,0 von 10" />
+                        tools:text="1. Vertrag verlängern – 2,5 von 10&#10;2. Gebrauchtwagen kaufen – 4,0 von 10&#10;3. Projekt übernehmen – 5,0 von 10" />
 
                 </LinearLayout>
 
@@ -449,6 +455,7 @@
 
     </androidx.core.widget.NestedScrollView>
 
+    <!-- Bottom Navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="0dp"

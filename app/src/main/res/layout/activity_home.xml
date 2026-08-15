@@ -10,6 +10,7 @@
     android:background="#FEF7FF"
     tools:context=".HomeActivity">
 
+    <!-- Scrollbarer Dashboard-Bereich -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -29,6 +30,7 @@
             android:paddingEnd="20dp"
             android:paddingBottom="32dp">
 
+            <!-- Überschrift -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -37,6 +39,7 @@
                 android:textSize="28sp"
                 android:textStyle="bold" />
 
+            <!-- Untertitel -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -45,6 +48,7 @@
                 android:textColor="#79747E"
                 android:textSize="15sp" />
 
+            <!-- Neue Entscheidung erstellen -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnNeueEntscheidung"
                 android:layout_width="match_parent"
@@ -58,6 +62,7 @@
                 android:textStyle="bold"
                 app:cornerRadius="16dp" />
 
+            <!-- Übersicht über alle Entscheidungen -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -80,12 +85,12 @@
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
+                    <!-- Anzahl aller, offenen und bewerteten Entscheidungen -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="22dp"
-                        android:orientation="horizontal"
-                        android:weightSum="3">
+                        android:orientation="horizontal">
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -168,7 +173,7 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-
+            <!-- Fällige Bewertungen -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -205,7 +210,7 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-
+            <!-- Zuletzt erstellte Entscheidungen -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -247,6 +252,7 @@
 
     </androidx.core.widget.NestedScrollView>
 
+    <!-- Bottom Navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="0dp"
