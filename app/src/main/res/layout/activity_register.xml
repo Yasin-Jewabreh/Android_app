@@ -13,7 +13,7 @@
 
     <!-- Scrollbarer Bereich für die Registrierung -->
     <androidx.core.widget.NestedScrollView
-        android:id="@+id/registerScrollView"
+        android:id="@+id/nsvRegistrierung"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:clipToPadding="false"
@@ -31,7 +31,7 @@
 
             <!-- Überschrift -->
             <TextView
-                android:id="@+id/addDecisionText"
+                android:id="@+id/tvRegistrierungTitel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
@@ -48,7 +48,7 @@
 
             <!-- Untertitel -->
             <TextView
-                android:id="@+id/registerUntertitel"
+                android:id="@+id/tvRegistrierungUntertitel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
@@ -60,11 +60,11 @@
                 android:textSize="15sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/addDecisionText" />
+                app:layout_constraintTop_toBottomOf="@+id/tvRegistrierungTitel" />
 
             <!-- Nutzername -->
             <EditText
-                android:id="@+id/decisionTitel"
+                android:id="@+id/etNutzername"
                 android:layout_width="0dp"
                 android:layout_height="56dp"
                 android:layout_marginStart="40dp"
@@ -82,11 +82,11 @@
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/registerUntertitel" />
+                app:layout_constraintTop_toBottomOf="@+id/tvRegistrierungUntertitel" />
 
             <!-- E-Mail-Adresse -->
             <EditText
-                android:id="@+id/emailTextRegister"
+                android:id="@+id/etRegistrierungEmail"
                 android:layout_width="0dp"
                 android:layout_height="56dp"
                 android:layout_marginStart="40dp"
@@ -104,11 +104,11 @@
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/decisionTitel" />
+                app:layout_constraintTop_toBottomOf="@+id/etNutzername" />
 
             <!-- Passwort -->
             <EditText
-                android:id="@+id/passwortTextRegister"
+                android:id="@+id/etRegistrierungPasswort"
                 android:layout_width="0dp"
                 android:layout_height="56dp"
                 android:layout_marginStart="40dp"
@@ -126,11 +126,11 @@
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/emailTextRegister" />
+                app:layout_constraintTop_toBottomOf="@+id/etRegistrierungEmail" />
 
             <!-- Passwort wiederholen -->
             <EditText
-                android:id="@+id/passwortTextRegisterRepeat"
+                android:id="@+id/etRegistrierungPasswortWiederholen"
                 android:layout_width="0dp"
                 android:layout_height="56dp"
                 android:layout_marginStart="40dp"
@@ -148,11 +148,11 @@
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/passwortTextRegister" />
+                app:layout_constraintTop_toBottomOf="@+id/etRegistrierungPasswort" />
 
             <!-- Registrierung abschließen -->
             <Button
-                android:id="@+id/registerButton"
+                android:id="@+id/btnRegistrieren"
                 android:layout_width="0dp"
                 android:layout_height="58dp"
                 android:layout_marginStart="40dp"
@@ -166,11 +166,11 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/passwortTextRegisterRepeat" />
+                app:layout_constraintTop_toBottomOf="@+id/etRegistrierungPasswortWiederholen" />
 
             <!-- Zur Login-Seite zurückkehren -->
             <TextView
-                android:id="@+id/loginText"
+                android:id="@+id/tvZurAnmeldung"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
@@ -185,7 +185,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/registerButton"
+                app:layout_constraintTop_toBottomOf="@+id/btnRegistrieren"
                 app:layout_constraintVertical_bias="0" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

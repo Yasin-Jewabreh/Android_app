@@ -13,7 +13,7 @@
 
     <!-- Überschrift -->
     <TextView
-        android:id="@+id/loginAufforderung"
+        android:id="@+id/tvAnmeldungTitel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
@@ -30,7 +30,7 @@
 
     <!-- Untertitel -->
     <TextView
-        android:id="@+id/loginUntertitel"
+        android:id="@+id/tvAnmeldungUntertitel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
@@ -42,11 +42,11 @@
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/loginAufforderung" />
+        app:layout_constraintTop_toBottomOf="@+id/tvAnmeldungTitel" />
 
     <!-- E-Mail-Adresse -->
     <EditText
-        android:id="@+id/emailText"
+        android:id="@+id/etAnmeldungEmail"
         android:layout_width="0dp"
         android:layout_height="56dp"
         android:layout_marginStart="40dp"
@@ -64,11 +64,11 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/loginUntertitel" />
+        app:layout_constraintTop_toBottomOf="@+id/tvAnmeldungUntertitel" />
 
     <!-- Passwort -->
     <EditText
-        android:id="@+id/passwortText"
+        android:id="@+id/etAnmeldungPasswort"
         android:layout_width="0dp"
         android:layout_height="56dp"
         android:layout_marginStart="40dp"
@@ -86,11 +86,11 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/emailText" />
+        app:layout_constraintTop_toBottomOf="@+id/etAnmeldungEmail" />
 
     <!-- Automatischen Login speichern -->
     <CheckBox
-        android:id="@+id/checkLoginSpeichern"
+        android:id="@+id/cbAnmeldungMerken"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
@@ -98,13 +98,13 @@
         android:text="Meine Anmeldedaten merken"
         android:textColor="#49454F"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@id/passwortText"
-        app:layout_constraintStart_toStartOf="@id/passwortText"
-        app:layout_constraintTop_toBottomOf="@id/passwortText" />
+        app:layout_constraintEnd_toEndOf="@+id/etAnmeldungPasswort"
+        app:layout_constraintStart_toStartOf="@+id/etAnmeldungPasswort"
+        app:layout_constraintTop_toBottomOf="@+id/etAnmeldungPasswort" />
 
     <!-- Anmelden -->
     <Button
-        android:id="@+id/loginButton"
+        android:id="@+id/btnAnmelden"
         android:layout_width="0dp"
         android:layout_height="58dp"
         android:layout_marginStart="40dp"
@@ -118,11 +118,11 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/checkLoginSpeichern" />
+        app:layout_constraintTop_toBottomOf="@+id/cbAnmeldungMerken" />
 
     <!-- Zur Registrierung wechseln -->
     <TextView
-        android:id="@+id/loginText"
+        android:id="@+id/tvZurRegistrierung"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
@@ -136,6 +136,6 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/loginButton" />
+        app:layout_constraintTop_toBottomOf="@+id/btnAnmelden" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
